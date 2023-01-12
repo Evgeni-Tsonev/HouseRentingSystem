@@ -8,7 +8,7 @@
 
         [Required]
         [StringLength(50)]
-        public string Name { get; set; }
+        public string Name { get; set; } = null!;
 
         public IEnumerable<House> Houses { get; set; } = new List<House>();
     }
