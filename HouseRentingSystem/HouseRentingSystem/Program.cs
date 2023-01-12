@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
-using HouseRentingSystem.Infrastructure.Data;
+using HouseRentingSystem.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
