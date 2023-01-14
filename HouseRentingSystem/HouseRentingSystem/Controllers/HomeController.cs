@@ -1,14 +1,17 @@
 ﻿namespace HouseRentingSystem.Controllers
 {
     using HouseRentingSystem.Models;
+    using HouseRentingSystem.Models.Home;
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using System.Diagnostics;
 
-    public class HomeController : Controller
+    [AllowAnonymous]
+    public class HomeController : BaseController
     {
         public IActionResult Index()
         {
-            return View();
+            return View(new IndexViewModel());
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
