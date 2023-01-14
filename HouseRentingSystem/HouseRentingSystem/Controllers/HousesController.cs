@@ -22,6 +22,11 @@
             return View(new HouseDetailsViewModel());
         }
 
+        public IActionResult Add()
+        {
+            return View();
+        }
+
         [HttpPost]
         public IActionResult Add(HouseFormModel model)
         {
