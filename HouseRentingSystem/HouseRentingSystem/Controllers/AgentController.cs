@@ -1,19 +1,19 @@
 ﻿namespace HouseRentingSystem.Controllers
 {
+    using HouseRentingSystem.Models.Agents;
     using Microsoft.AspNetCore.Mvc;
 
     public class AgentController : BaseController
     {
-        [HttpPost]
-        public IActionResult Rent(int id)
+        public IActionResult Become()
         {
-            return RedirectToAction(nameof(HousesController.Mine));
+            return View();
         }
 
         [HttpPost]
-        public IActionResult Leave(int id)
+        public IActionResult Become(BecomeAgentFormModel agent)
         {
-            return RedirectToAction(nameof(HousesController.Mine));
+            return RedirectToAction(nameof(HousesController.All), nameof(HousesController));
         }
     }
 }
