@@ -3,7 +3,7 @@
     using HouseRentingSystem.Models.Agents;
     using Microsoft.AspNetCore.Mvc;
 
-    public class AgentController : BaseController
+    public class AgentsController : BaseController
     {
         public IActionResult Become()
         {
