@@ -8,8 +8,8 @@
 
         [Required]
         [StringLength(NameMaxLength)]
-        public string Name { get; set; } = null!;
+        public string Name { get; init; } = null!;
 
-        public IEnumerable<House> Houses { get; set; } = new List<House>();
+        public IEnumerable<House> Houses { get; init; } = new List<House>();
     }
 }

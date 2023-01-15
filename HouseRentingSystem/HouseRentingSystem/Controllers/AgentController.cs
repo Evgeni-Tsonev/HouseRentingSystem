@@ -16,7 +16,7 @@
 
         public async Task<IActionResult> Become()
         {
-            if (await agentService.ExistsById(User.Id()))
+            if (!await agentService.ExistsById(User.Id()))
             {
                 return BadRequest();
             }

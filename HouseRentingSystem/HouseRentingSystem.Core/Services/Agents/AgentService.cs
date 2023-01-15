@@ -2,6 +2,7 @@
 {
     using HouseRentingSystem.Infrastructure;
     using HouseRentingSystem.Infrastructure.Data;
+    using Microsoft.EntityFrameworkCore;
 
     public class AgentService : IAgentService
     {
@@ -26,23 +27,32 @@
 
         public async Task<bool> ExistsById(string userId)
         {
-            return context
+            return await context
                 .Agents
-                .Any(a => a.UserId == userId);
+                .AnyAsync(a => a.UserId == userId);
+        }
+
+        public async Task<int> GetAgentId(string userId)
+        {
+            var agent = await context
+                .Agents
+                .FirstOrDefaultAsync(a => a.UserId == userId);
+
+            return agent.Id;
         }
 
         public async Task<bool> UserHasRents(string userId)
         {
-            return context
+            return await context
                 .Houses
-                .Any(h => h.RenterId == userId);
+                .AnyAsync(h => h.RenterId == userId);
         }
 
         public async Task<bool> UserWithPhoneNumberExists(string phoneNumber)
         {
-            return context
+            return await context
                 .Agents
-                .Any(a => a.PhoneNumber == phoneNumber);
+                .AnyAsync(a => a.PhoneNumber == phoneNumber);
         }
     }
 }

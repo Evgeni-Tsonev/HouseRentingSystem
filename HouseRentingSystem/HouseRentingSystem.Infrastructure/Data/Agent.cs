@@ -5,15 +5,15 @@
 
     public class Agent
     {
-        public int Id { get; set; }
+        public int Id { get; init; }
 
         [Required]
         [StringLength(PhoneNumberMaxLength)]
-        public string PhoneNumber  { get; set; } = null!;
+        public string PhoneNumber  { get; init; } = null!;
 
         [Required]
-        public string UserId  { get; set; } = null!;
+        public string UserId  { get; init; } = null!;
 
-        public User User  { get; set; } = null!;
+        public User User  { get; init; } = null!;
     }
 }

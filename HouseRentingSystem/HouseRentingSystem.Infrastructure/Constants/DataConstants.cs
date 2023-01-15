@@ -21,9 +21,9 @@
 
             public const int AddressMinLength = 30;
 
-            public const int DescriptionMaxLength = 50;
+            public const int DescriptionMaxLength = 500;
 
-            public const int DescriptionMinLength = 500;
+            public const int DescriptionMinLength = 50;
 
             public const int PricePerMounthMaxLength = 2000;
 
