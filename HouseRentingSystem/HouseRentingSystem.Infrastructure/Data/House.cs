@@ -1,27 +1,28 @@
 ﻿namespace HouseRentingSystem.Infrastructure.Data
 {
     using System.ComponentModel.DataAnnotations;
+    using static HouseRentingSystem.Infrastructure.Constants.DataConstants.House;
 
     public class House
     {
         public int Id { get; set; }
 
         [Required]
-        [StringLength(50)]
+        [StringLength(TitleMaxLength)]
         public string Title { get; set; } = null!;
 
         [Required]
-        [StringLength(150)]
+        [StringLength(AddressMaxLength)]
         public string Address { get; set; } = null!;
 
         [Required]
-        [StringLength(500)]
+        [StringLength(DescriptionMaxLength)]
         public string Description  { get; set; } = null!;
 
         [Required]
         public string ImageUrl   { get; set; } = null!;
 
-        [Range(0, 2000)]
+        [Range(PricePerMounthMinLength, PricePerMounthMaxLength)]
         public decimal PricePerMonth    { get; set; }
 
         public int CategoryId     { get; set; }
