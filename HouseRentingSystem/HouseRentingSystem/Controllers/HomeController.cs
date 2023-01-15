@@ -1,5 +1,6 @@
 ﻿namespace HouseRentingSystem.Controllers
 {
+    using HouseRentingSystem.Core.Services.Houses;
     using HouseRentingSystem.Models;
     using HouseRentingSystem.Models.Home;
     using Microsoft.AspNetCore.Authorization;
@@ -9,9 +10,17 @@
     [AllowAnonymous]
     public class HomeController : BaseController
     {
+        private readonly IHouseService houseService;
+
+        public HomeController(IHouseService houseService)
+        {
+            this.houseService = houseService;
+        }
+
         public IActionResult Index()
         {
-            return View(new IndexViewModel());
+            var houses = houseService.LastThreeHouses();
+            return View(houses);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

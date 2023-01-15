@@ -2,13 +2,11 @@ using Microsoft.EntityFrameworkCore;
 
 using HouseRentingSystem.Infrastructure;
 using HouseRentingSystem.Infrastructure.Data;
+using HouseRentingSystem.Extentions.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
 
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlServer(connectionString));
-builder.Services.AddDatabaseDeveloperPageExceptionFilter();
+builder.Services.AddApplicationDbContexts(builder.Configuration);
 
 builder.Services.AddDefaultIdentity<User>(options =>
 {
@@ -21,6 +19,7 @@ builder.Services.AddDefaultIdentity<User>(options =>
     .AddEntityFrameworkStores<ApplicationDbContext>();
 
 builder.Services.AddControllersWithViews();
+builder.Services.AddApplicationServices(builder.Configuration);
 
 var app = builder.Build();
 
