@@ -1,4 +1,4 @@
-﻿namespace HouseRentingSystem.Core.Models.Agents
+﻿namespace HouseRentingSystem.Core.Services.Agents
 {
     using HouseRentingSystem.Infrastructure;
     using HouseRentingSystem.Infrastructure.Data;
@@ -12,7 +12,7 @@
             this.context = context;
         }
 
-        public void Create(string userId, string phoneNumber)
+        public async Task Create(string userId, string phoneNumber)
         {
             var agent = new Agent()
             {
@@ -20,25 +20,25 @@
                 PhoneNumber = phoneNumber,
             };
 
-            context.Agents.Add(agent);
-            context.SaveChanges();
+            await context.Agents.AddAsync(agent);
+            await context.SaveChangesAsync();
         }
 
-        public bool ExistsById(string userId)
+        public async Task<bool> ExistsById(string userId)
         {
             return context
                 .Agents
                 .Any(a => a.UserId == userId);
         }
 
-        public bool UserHasRents(string userId)
+        public async Task<bool> UserHasRents(string userId)
         {
             return context
                 .Houses
                 .Any(h => h.RenterId == userId);
         }
 
-        public bool UserWithPhoneNumberExists(string phoneNumber)
+        public async Task<bool> UserWithPhoneNumberExists(string phoneNumber)
         {
             return context
                 .Agents

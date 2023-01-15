@@ -1,6 +1,6 @@
 ﻿namespace HouseRentingSystem.Infrastructure.DependencyInjection
 {
-    using HouseRentingSystem.Core.Models.Agents;
+    using HouseRentingSystem.Core.Services.Agents;
     using HouseRentingSystem.Core.Services.Houses;
     using HouseRentingSystem.Infrastructure;
     using Microsoft.EntityFrameworkCore;

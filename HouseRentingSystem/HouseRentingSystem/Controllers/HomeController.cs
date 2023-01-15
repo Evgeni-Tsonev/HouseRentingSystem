@@ -2,7 +2,6 @@
 {
     using HouseRentingSystem.Core.Services.Houses;
     using HouseRentingSystem.Models;
-    using HouseRentingSystem.Models.Home;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using System.Diagnostics;
@@ -17,9 +16,9 @@
             this.houseService = houseService;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            var houses = houseService.LastThreeHouses();
+            var houses = await houseService.LastThreeHouses();
             return View(houses);
         }
 

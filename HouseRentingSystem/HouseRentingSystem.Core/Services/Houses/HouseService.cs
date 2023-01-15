@@ -13,7 +13,7 @@
             this.context = context;
         }
 
-        public IEnumerable<HouseIndexServiceModel> LastThreeHouses()
+        public async Task<IEnumerable<HouseIndexServiceModel>> LastThreeHouses()
         {
             return context
                 .Houses
