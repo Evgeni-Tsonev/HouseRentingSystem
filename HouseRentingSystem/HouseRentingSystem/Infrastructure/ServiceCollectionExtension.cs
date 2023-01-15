@@ -1,5 +1,6 @@
-﻿namespace HouseRentingSystem.Extentions.DependencyInjection
+﻿namespace HouseRentingSystem.Infrastructure.DependencyInjection
 {
+    using HouseRentingSystem.Core.Models.Agents;
     using HouseRentingSystem.Core.Services.Houses;
     using HouseRentingSystem.Infrastructure;
     using Microsoft.EntityFrameworkCore;
@@ -9,6 +10,7 @@
         public static IServiceCollection AddApplicationServices(this IServiceCollection services, IConfiguration config)
         {
             services.AddScoped<IHouseService, HouseService>();
+            services.AddScoped<IAgentService, AgentService>();
 
             return services;
         }
