@@ -2,7 +2,7 @@ using Microsoft.EntityFrameworkCore;
 
 using HouseRentingSystem.Infrastructure;
 using HouseRentingSystem.Infrastructure.Data;
-using HouseRentingSystem.Extentions.DependencyInjection;
+using HouseRentingSystem.Infrastructure.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
 
