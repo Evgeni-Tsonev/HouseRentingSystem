@@ -37,9 +37,24 @@
             return View(query);
         }
 
-        public IActionResult Mine()
+        public async Task<IActionResult> Mine()
         {
-            return View(new AllHousesQueryModel());
+            IEnumerable<HouseServiceModel> myHouses = null;
+
+            var userId = User.Id();
+
+            if (await agentService.ExistsById(userId))
+            {
+                var currentAgentId = await agentService.GetAgentId(userId);
+
+                myHouses = await housesService.AllHousesByAgentId(currentAgentId);
+            }
+            else
+            {
+                myHouses = await housesService.AllHousesByUserId(userId);
+            }
+
+            return View(myHouses);
         }
 
         public IActionResult Details(int id)
