@@ -57,9 +57,16 @@
             return View(myHouses);
         }
 
-        public IActionResult Details(int id)
+        public async Task<IActionResult> Details(int id)
         {
-            return View(new HouseDetailsViewModel());
+            if (await housesService.Exists(id))
+            {
+                return BadRequest();
+            }
+
+            var houses = await housesService.HouseDetailsById(id);
+
+            return View(houses);
         }
 
         public async Task<IActionResult> Add()
@@ -113,7 +120,7 @@
 
         public IActionResult Edit(int id)
         {
-            return View(new HouseDetailsViewModel());
+            return View(new HouseDetailsServiceModel());
         }
 
         [HttpPost]
@@ -124,7 +131,7 @@
 
         public IActionResult Delete(int id)
         {
-            return View(new HouseDetailsViewModel());
+            return View(new HouseDetailsServiceModel());
         }
 
         [HttpPost]

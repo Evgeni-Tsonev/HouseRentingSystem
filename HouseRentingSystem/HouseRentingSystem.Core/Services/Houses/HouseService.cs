@@ -1,5 +1,6 @@
 ﻿namespace HouseRentingSystem.Core.Services.Houses
 {
+    using HouseRentingSystem.Core.Models.Agents;
     using HouseRentingSystem.Core.Models.Enums;
     using HouseRentingSystem.Core.Models.Houses;
     using HouseRentingSystem.Infrastructure;
@@ -145,6 +146,37 @@
             await context.SaveChangesAsync();
 
             return house.Id;
+        }
+
+        public async Task<bool> Exists(int id)
+        {
+            return await context
+                .Houses
+                .AllAsync(h => h.Id == id);
+        }
+
+        public async Task<HouseDetailsServiceModel> HouseDetailsById(int id)
+        {
+            return await context
+                .Houses
+                .Where(h => h.Id == id)
+                .Select(h => new HouseDetailsServiceModel()
+                {
+                    Id = h.Id,
+                    Title = h.Title,
+                    Address = h.Address,
+                    Description = h.Description,
+                    ImageUrl = h.ImageUrl,
+                    PricePerMonth = h.PricePerMonth,
+                    IsRented = h.RenterId != null,
+                    Category = h.Category.Name,
+                    Agent = new AgentServiceModel()
+                    {
+                        PhoneNumber = h.Agent.PhoneNumber,
+                        Email = h.Agent.User.Email,
+                    }
+                })
+                .FirstOrDefaultAsync();
         }
 
         public IEnumerable<HouseIndexServiceModel> LastThreeHouses()
