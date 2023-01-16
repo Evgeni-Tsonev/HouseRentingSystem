@@ -18,7 +18,7 @@
 
         public async Task<IActionResult> Index()
         {
-            var houses = await houseService.LastThreeHouses();
+            var houses = houseService.LastThreeHouses();
             return View(houses);
         }
 

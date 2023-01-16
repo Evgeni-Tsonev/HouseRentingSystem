@@ -1,12 +1,15 @@
 ﻿namespace HouseRentingSystem.Core.Services.Houses
 {
+    using HouseRentingSystem.Core.Models.Enums;
     using HouseRentingSystem.Core.Models.Houses;
 
     public interface IHouseService
     {
-        Task<IEnumerable<HouseIndexServiceModel>> LastThreeHouses();
+        IEnumerable<HouseIndexServiceModel> LastThreeHouses();
 
         Task<IEnumerable<HouseCategoryServiceModel>> AllCategories();
+
+        Task<IEnumerable<string>> AllCategoriesNames();
 
         Task<bool> CategoryExists(int categoryId);
 
@@ -19,6 +22,11 @@
             int categoryId,
             int agentId);
 
-
+        Task<HouseQueryServiceModel> All(
+            string category = null,
+            string searchTerm = null,
+            HouseSorting sorting = HouseSorting.Newest,
+            int currentPage = 1,
+            int housesPerPage = 1);
     }
 }

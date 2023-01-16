@@ -2,7 +2,7 @@
 {
     using HouseRentingSystem.Core.Services.Agents;
     using HouseRentingSystem.Infrastructure;
-    using HouseRentingSystem.Models.Agents;
+    using HouseRentingSystem.Core.Models.Agents;
     using Microsoft.AspNetCore.Mvc;
 
     public class AgentsController : BaseController
