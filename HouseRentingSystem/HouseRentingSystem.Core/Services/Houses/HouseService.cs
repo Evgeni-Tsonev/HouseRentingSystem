@@ -148,11 +148,55 @@
             return house.Id;
         }
 
+        public async Task Edit(int houseId,
+            string title,
+            string address,
+            string description,
+            string imageUrl,
+            decimal price,
+            int categoryId)
+        {
+            var house = await context.Houses.FindAsync(houseId);
+
+            house.Title = title;
+            house.Address = address;
+            house.Description = description;
+            house.ImageUrl = imageUrl;
+            house.PricePerMonth = price;
+            house.CategoryId = categoryId;
+
+            await context.SaveChangesAsync();
+        }
+
         public async Task<bool> Exists(int id)
         {
             return await context
                 .Houses
-                .AllAsync(h => h.Id == id);
+                .AnyAsync(h => h.Id == id);
+        }
+
+        public async Task<int> GetHouseCategoryId(int houseId)
+        {
+            var house = await context.Houses.FindAsync(houseId);
+            return house.CategoryId;
+        }
+
+        public async Task<bool> HasAgentWithId(int houseId, string currentUserId)
+        {
+            var house = await context.Houses.FindAsync(houseId);
+            var agent = await context.Agents.FirstOrDefaultAsync(a => a.UserId == currentUserId);
+
+            if (agent == null)
+            {
+                return false;
+            }
+
+            if (agent.UserId != currentUserId)
+            {
+                return false;
+            }
+
+            return true;
         }
 
         public async Task<HouseDetailsServiceModel> HouseDetailsById(int id)

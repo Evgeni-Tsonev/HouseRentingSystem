@@ -9,30 +9,30 @@
 
         [Required]
         [StringLength(TitleMaxLength)]
-        public string Title { get; init; } = null!;
+        public string Title { get; set; } = null!;
 
         [Required]
         [StringLength(AddressMaxLength)]
-        public string Address { get; init; } = null!;
+        public string Address { get; set; } = null!;
 
         [Required]
         [StringLength(DescriptionMaxLength)]
-        public string Description  { get; init; } = null!;
+        public string Description  { get; set; } = null!;
 
         [Required]
-        public string ImageUrl   { get; init; } = null!;
+        public string ImageUrl   { get; set; } = null!;
 
         [Range(PricePerMounthMinLength, PricePerMounthMaxLength)]
-        public decimal PricePerMonth    { get; init; }
+        public decimal PricePerMonth    { get; set; }
 
-        public int CategoryId     { get; init; }
+        public int CategoryId     { get; set; }
             
-        public Category Category { get; init; } = null!;
+        public Category Category { get; set; } = null!;
 
-        public int AgentId { get; init; }
+        public int AgentId { get; set; }
 
-        public Agent Agent { get; init; } = null!;
+        public Agent Agent { get; set; } = null!;
 
-        public string? RenterId { get; init; }
+        public string? RenterId { get; set; }
     }
 }

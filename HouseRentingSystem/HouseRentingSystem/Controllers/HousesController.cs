@@ -59,14 +59,14 @@
 
         public async Task<IActionResult> Details(int id)
         {
-            if (await housesService.Exists(id))
+            if (!await housesService.Exists(id))
             {
                 return BadRequest();
             }
 
-            var houses = await housesService.HouseDetailsById(id);
+            var house = await housesService.HouseDetailsById(id);
 
-            return View(houses);
+            return View(house);
         }
 
         public async Task<IActionResult> Add()
@@ -118,15 +118,71 @@
             return RedirectToAction(nameof(Details), new { id = houseId });
         }
 
-        public IActionResult Edit(int id)
+        public async Task<IActionResult> Edit(int id)
         {
-            return View(new HouseDetailsServiceModel());
+            if (!await housesService.Exists(id))
+            {
+                return BadRequest();
+            }
+
+            if (!await housesService.HasAgentWithId(id, User.Id()))
+            {
+                return Unauthorized();
+            }
+
+            var house = await housesService.HouseDetailsById(id);
+
+            var houseCategoryId = await housesService.GetHouseCategoryId(house.Id);
+
+            var model = new HouseFormModel()
+            {
+                Title = house.Title,
+                Address = house.Address,
+                Description = house.Description,
+                ImageUrl = house.ImageUrl,
+                PricePerMonth = house.PricePerMonth,
+                CategoryId = houseCategoryId,
+                Categories = await housesService.AllCategories(),
+            };
+
+            return View(model);
         }
 
         [HttpPost]
-        public IActionResult Edit(int id, HouseFormModel house)
+        public async Task<IActionResult> Edit(int id, HouseFormModel house)
         {
-            return RedirectToAction(nameof(Details), new { id = "1" });
+            if (!await housesService.Exists(id))
+            {
+                return View();
+            }
+
+            if (!await housesService.HasAgentWithId(id, User.Id()))
+            {
+                return Unauthorized();
+            }
+
+            if (!await housesService.CategoryExists(house.CategoryId))
+            {
+                ModelState.AddModelError(nameof(house.CategoryId),
+                    "Category does not exist.");
+            }
+
+            if (!ModelState.IsValid)
+            {
+                house.Categories = await housesService.AllCategories();
+                return View(house);
+            }
+
+            await housesService.Edit(
+                id,
+                house.Title,
+                house.Address,
+                house.Description,
+                house.ImageUrl,
+                house.PricePerMonth,
+                house.CategoryId);
+
+            return RedirectToAction(nameof(Details), new { id = id });
         }
 
         public IActionResult Delete(int id)
