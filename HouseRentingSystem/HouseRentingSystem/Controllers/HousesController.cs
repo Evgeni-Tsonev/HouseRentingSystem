@@ -185,14 +185,46 @@
             return RedirectToAction(nameof(Details), new { id = id });
         }
 
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
-            return View(new HouseDetailsServiceModel());
+            if (!await housesService.Exists(id))
+            {
+                return BadRequest();
+            }
+
+            if (!await housesService.HasAgentWithId(id, User.Id()))
+            {
+                return Unauthorized();
+            }
+
+            var house = await housesService.HouseDetailsById(id);
+
+            var model = new HouseDetailsViewModel()
+            {
+                Id = id,
+                Title = house.Title,
+                Address = house.Address,
+                ImageUrl = house.ImageUrl,
+            };
+
+            return View(model);
         }
 
         [HttpPost]
-        public IActionResult Delete(HouseFormModel house)
+        public async Task<IActionResult> Delete(HouseDetailsViewModel house)
         {
+            if (!await housesService.Exists(house.Id))
+            {
+                return BadRequest();
+            }
+
+            if (!await housesService.HasAgentWithId(house.Id, User.Id()))
+            {
+                return Unauthorized();
+            }
+
+            await housesService.Delete(house.Id);
+
             return RedirectToAction(nameof(All));
         }
 

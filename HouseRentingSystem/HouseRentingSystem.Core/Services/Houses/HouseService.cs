@@ -65,7 +65,7 @@
                 })
                 .ToListAsync();
 
-            var totalHousesCount = houses.Count();
+            var totalHousesCount = housesQuery.Count();
 
             return new HouseQueryServiceModel()
             {
@@ -146,6 +146,14 @@
             await context.SaveChangesAsync();
 
             return house.Id;
+        }
+
+        public async Task Delete(int houseId)
+        {
+            var house = await context.Houses.FindAsync(houseId);
+
+            context.Houses.Remove(house);
+            await context.SaveChangesAsync();
         }
 
         public async Task Edit(int houseId,
