@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using HouseRentingSystem.Infrastructure;
 using HouseRentingSystem.Infrastructure.Data;
 using HouseRentingSystem.Infrastructure.DependencyInjection;
+using Microsoft.AspNetCore.Mvc;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,7 +19,11 @@ builder.Services.AddDefaultIdentity<User>(options =>
 })
     .AddEntityFrameworkStores<ApplicationDbContext>();
 
-builder.Services.AddControllersWithViews();
+builder.Services.AddControllersWithViews(options =>
+{
+    options.Filters.Add<AutoValidateAntiforgeryTokenAttribute>();
+});
+
 builder.Services.AddApplicationServices(builder.Configuration);
 
 var app = builder.Build();
