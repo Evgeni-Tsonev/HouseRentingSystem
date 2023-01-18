@@ -2,6 +2,7 @@
 {
     using HouseRentingSystem.Core.Services.Agents;
     using HouseRentingSystem.Core.Services.Houses;
+    using HouseRentingSystem.Core.Services.Statistics;
     using HouseRentingSystem.Infrastructure;
     using Microsoft.EntityFrameworkCore;
 
@@ -11,6 +12,7 @@
         {
             services.AddScoped<IHouseService, HouseService>();
             services.AddScoped<IAgentService, AgentService>();
+            services.AddScoped<IStatisticsService, StatisticsService>();
 
             return services;
         }
