@@ -252,8 +252,21 @@
         }
 
         [HttpPost]
-        public IActionResult Leave(int id)
+        public async Task<IActionResult> Leave(int id)
         {
+            if (!await housesService.Exists(id) ||
+                !await housesService.IsRented(id))
+            {
+                return BadRequest();
+            }
+
+            if (!await housesService.IsRentedByUserWithId(id, User.Id()))
+            {
+                return Unauthorized();
+            }
+
+            await housesService.Leave(id);
+
             return RedirectToAction(nameof(Mine));
         }
     }

@@ -268,6 +268,14 @@
                 .Take(3);
         }
 
+        public async Task Leave(int houseId)
+        {
+            var house = await context.Houses.FindAsync(houseId);
+
+            house.RenterId = null;
+            await context.SaveChangesAsync();
+        }
+
         public async Task Rent(int houseId, string userId)
         {
             var house = await context.Houses.FindAsync(houseId);
