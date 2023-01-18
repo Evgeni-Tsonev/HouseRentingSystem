@@ -229,8 +229,25 @@
         }
 
         [HttpPost]
-        public IActionResult Rent(int id)
+        public async Task<IActionResult> Rent(int id)
         {
+            if (!await housesService.Exists(id))
+            {
+                return BadRequest();
+            }
+
+            if (await agentService.ExistsById(User.Id()))
+            {
+                return Unauthorized();
+            }
+
+            if (await housesService.IsRented(id))
+            {
+                return BadRequest();
+            }
+
+            await housesService.Rent(id, User.Id());
+
             return RedirectToAction(nameof(Mine));
         }
 

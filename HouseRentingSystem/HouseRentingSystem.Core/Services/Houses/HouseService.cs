@@ -231,6 +231,29 @@
                 .FirstOrDefaultAsync();
         }
 
+        public async Task<bool> IsRented(int id)
+        {
+            var house = await context.Houses.FindAsync(id);
+            return house.RenterId != null;
+        }
+
+        public async Task<bool> IsRentedByUserWithId(int houseId, string userId)
+        {
+            var house = await context.Houses.FindAsync(houseId);
+
+            if (house == null)
+            {
+                return false;
+            }
+
+            if (house.RenterId != userId)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
         public IEnumerable<HouseIndexServiceModel> LastThreeHouses()
         {
             return context
@@ -243,6 +266,14 @@
                     ImageUrl = h.ImageUrl,
                 })
                 .Take(3);
+        }
+
+        public async Task Rent(int houseId, string userId)
+        {
+            var house = await context.Houses.FindAsync(houseId);
+
+            house.RenterId = userId;
+            await context.SaveChangesAsync();
         }
 
         private IEnumerable<HouseServiceModel> ProjectToModel(List<House> houses)
